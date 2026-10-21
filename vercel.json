@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "functions": {
+    "server.js": {
+      "includeFiles": "{*.html,*.css,*.js,admin/**}"
+    }
+  },
   "rewrites": [
     { "source": "/api/bookings.php", "destination": "/api/bookings" },
     { "source": "/api/messages.php", "destination": "/api/messages" },

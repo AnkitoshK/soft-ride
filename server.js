@@ -13,8 +13,29 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.txt': 'text/plain; charset=utf-8'
 };
+
+// Explicit static references for @vercel/nft trace
+const STATIC_ASSETS = [
+  path.join(__dirname, 'index.html'),
+  path.join(__dirname, 'about.html'),
+  path.join(__dirname, 'services.html'),
+  path.join(__dirname, 'fleet.html'),
+  path.join(__dirname, 'pricing.html'),
+  path.join(__dirname, 'reviews.html'),
+  path.join(__dirname, 'contact.html'),
+  path.join(__dirname, 'booking.html'),
+  path.join(__dirname, 'booking.css'),
+  path.join(__dirname, 'booking.js'),
+  path.join(__dirname, 'style.css'),
+  path.join(__dirname, 'style.js'),
+  path.join(__dirname, 'responsive.css'),
+  path.join(__dirname, 'admin', 'index.html'),
+  path.join(__dirname, 'admin', 'admin.css'),
+  path.join(__dirname, 'admin', 'admin.js')
+];
 
 async function handler(req, res) {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
@@ -59,11 +80,17 @@ async function handler(req, res) {
   if (pathname === '/') pathname = '/index.html';
   let filePath = path.join(__dirname, pathname);
 
+  // Clean URLs support (/about -> /about.html)
+  if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) {
+    filePath = filePath + '.html';
+  }
+
+  // Directory index support (/admin -> /admin/index.html)
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
     filePath = path.join(filePath, 'index.html');
   }
 
-  if (fs.existsSync(filePath)) {
+  if (fs.existsSync(filePath) && !fs.statSync(filePath).isDirectory()) {
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': contentType });
