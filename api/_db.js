@@ -218,10 +218,21 @@ async function deleteMessage(id) {
   return true;
 }
 
+async function deleteBooking(id) {
+  if (pool) {
+    await ensureTables();
+    await pool.query('DELETE FROM soft_ride_bookings WHERE id::text = $1 OR booking_code = $1', [String(id)]);
+    return true;
+  }
+  fallbackStore.bookings = fallbackStore.bookings.filter(b => String(b.id) !== String(id) && String(b.booking_code) !== String(id));
+  return true;
+}
+
 module.exports = {
   createBooking,
   getAllBookings,
   updateBookingStatus,
+  deleteBooking,
   createMessage,
   getAllMessages,
   deleteMessage,
