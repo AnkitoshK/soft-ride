@@ -1,13 +1,14 @@
 # 🚕 Soft Ride - Modern Cab Booking & Fleet Dispatch Platform
 
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel)](https://temporary-nimble-mesa-d0a6zel.vercel.app)
+[![Vercel](https://img.shields.io/badge/Vercel-soft--ride.vercel.app-black?logo=vercel)](https://soft-ride.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-v18+-green.svg?logo=node.js)](https://nodejs.org)
 [![Postgres](https://img.shields.io/badge/Postgres-Compatible-blue.svg?logo=postgresql)](https://vercel.com/docs/storage/vercel-postgres)
 
-* 🌐 **Live Website on Vercel:** [https://temporary-nimble-mesa-d0a6zel.vercel.app](https://temporary-nimble-mesa-d0a6zel.vercel.app)
+* 🌐 **Official Live Domain (Project-wise):** [https://soft-ride.vercel.app](https://soft-ride.vercel.app)
 * 🐙 **GitHub Repository:** [https://github.com/AnkitoshK/soft-ride](https://github.com/AnkitoshK/soft-ride)
-* 🔑 **Admin Portal:** [https://temporary-nimble-mesa-d0a6zel.vercel.app/admin/index.html](https://temporary-nimble-mesa-d0a6zel.vercel.app/admin/index.html) (User: `admin` | Pass: `RideAdmin@2026`)
+* 🔑 **Admin Portal:** [https://soft-ride.vercel.app/admin/index.html](https://soft-ride.vercel.app/admin/index.html) (User: `admin` | Pass: `RideAdmin@2026`)
+* ⚡ **Active Preview Deployment:** [https://temporary-speedy-acacia-taxptkk.vercel.app](https://temporary-speedy-acacia-taxptkk.vercel.app)
 
 > **Soft Ride** is a production-grade, full-stack cab booking and fleet dispatch web platform designed for urban commutes, airport transfers, corporate travel, outstation journeys, and luxury rentals across Ara, Patna, Bihar, and Eastern India.
 
