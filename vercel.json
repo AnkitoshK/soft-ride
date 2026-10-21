@@ -1,20 +1,13 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/api/bookings.php", "destination": "/api/bookings.js" },
-    { "source": "/api/messages.php", "destination": "/api/messages.js" },
-    { "source": "/api/admin_login.php", "destination": "/api/admin_login.js" },
-    { "source": "/api/admin_logout.php", "destination": "/api/admin_logout.js" },
-    { "source": "/api/admin_data.php", "destination": "/api/admin_data.js" },
-    { "source": "/api/admin_booking_status.php", "destination": "/api/admin_booking_status.js" },
-    { "source": "/api/admin_message_delete.php", "destination": "/api/admin_message_delete.js" },
-    { "source": "/api/bookings", "destination": "/api/bookings.js" },
-    { "source": "/api/messages", "destination": "/api/messages.js" },
-    { "source": "/api/admin_login", "destination": "/api/admin_login.js" },
-    { "source": "/api/admin_logout", "destination": "/api/admin_logout.js" },
-    { "source": "/api/admin_data", "destination": "/api/admin_data.js" },
-    { "source": "/api/admin_booking_status", "destination": "/api/admin_booking_status.js" },
-    { "source": "/api/admin_message_delete", "destination": "/api/admin_message_delete.js" }
+    { "source": "/api/bookings.php", "destination": "/api/bookings" },
+    { "source": "/api/messages.php", "destination": "/api/messages" },
+    { "source": "/api/admin_login.php", "destination": "/api/admin_login" },
+    { "source": "/api/admin_logout.php", "destination": "/api/admin_logout" },
+    { "source": "/api/admin_data.php", "destination": "/api/admin_data" },
+    { "source": "/api/admin_booking_status.php", "destination": "/api/admin_booking_status" },
+    { "source": "/api/admin_message_delete.php", "destination": "/api/admin_message_delete" }
   ],
   "headers": [
     {
