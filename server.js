@@ -34,7 +34,9 @@ const STATIC_ASSETS = [
   path.join(__dirname, 'responsive.css'),
   path.join(__dirname, 'admin', 'index.html'),
   path.join(__dirname, 'admin', 'admin.css'),
-  path.join(__dirname, 'admin', 'admin.js')
+  path.join(__dirname, 'admin', 'admin.js'),
+  path.join(__dirname, 'assets', 'juli-kumari.png'),
+  path.join(__dirname, 'assets', 'professional-driver.jpg')
 ];
 
 async function handler(req, res) {
