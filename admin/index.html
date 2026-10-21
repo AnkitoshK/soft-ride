@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Soft Ride - Admin & Dispatch Operations</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="shell">
+        <aside>
+            <a class="brand" href="../index.html">🚕 Soft<span>Ride</span></a>
+            <div style="font-size: 11px; color: #94a3b8; margin: -10px 0 20px 0; padding-left: 5px;">
+                Operations Desk: <strong>Juli Kumari</strong>
+            </div>
+            <button class="nav active" data-view="bookings"><i class="fas fa-calendar-check" style="margin-right:8px;"></i> Bookings</button>
+            <button class="nav" data-view="messages"><i class="fas fa-envelope" style="margin-right:8px;"></i> Messages</button>
+            <div class="side-bottom">
+                <a href="../index.html"><i class="fas fa-external-link-alt"></i> View Website</a>
+                <button id="logout"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+            </div>
+        </aside>
+
+        <main>
+            <header>
+                <div>
+                    <p class="muted">OPERATIONS DISPATCH / <span id="crumb">BOOKINGS</span></p>
+                    <h1>Welcome, <strong>Juli Kumari</strong> & Team <span>✦</span></h1>
+                    <small style="color: #64748b;">Helpline: +91 9142491242 • Central Fleet Console</small>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button class="refresh" id="exportBtn" style="background:#0284c7; color:#fff; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-weight:600;"><i class="fas fa-file-csv"></i> Export CSV</button>
+                    <button class="refresh" id="refresh">↻ Refresh</button>
+                </div>
+            </header>
+
+            <section id="login" class="login card">
+                <h2>Admin & Dispatch Sign In</h2>
+                <p class="muted">Manage customer ride bookings, dispatch assignments, and inquiries.</p>
+                <form id="loginForm">
+                    <label>Username
+                        <input id="username" autocomplete="username" value="admin" required>
+                    </label>
+                    <label>Password
+                        <input id="password" type="password" autocomplete="current-password" value="RideAdmin@2026" required>
+                    </label>
+                    <div id="loginError" style="color:#ef4444; font-size:13px; margin: 8px 0;"></div>
+                    <button class="primary" style="margin-top:10px;">Sign in securely →</button>
+                </form>
+                <small style="color: #64748b; margin-top: 15px; display: block;">Default access credentials: User <code>admin</code> | Password <code>RideAdmin@2026</code></small>
+            </section>
+
+            <section id="dashboard" hidden>
+                <div class="stats">
+                    <article class="card"><span>ALL BOOKINGS</span><b id="total">0</b></article>
+                    <article class="card"><span>PENDING</span><b id="pending">0</b></article>
+                    <article class="card"><span>CONFIRMED</span><b id="confirmed">0</b></article>
+                    <article class="card"><span>MESSAGES</span><b id="messageCount">0</b></article>
+                </div>
+                <div class="toolbar">
+                    <div>
+                        <h2 id="viewTitle">Ride bookings</h2>
+                        <p class="muted">Manage customer requests, update ride statuses, and respond to inquiries.</p>
+                    </div>
+                    <input id="search" placeholder="Search bookings or passengers…">
+                </div>
+                <div id="tableWrap" class="card table-wrap"></div>
+            </section>
+        </main>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html>

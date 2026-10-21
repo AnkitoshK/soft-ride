@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft Ride - Book Your Ride</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="booking.css">
+    <meta name="theme-color" content="#111827">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+
+    <!-- TOP HELPLINE BAR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span class="top-bar-badge"><i class="fas fa-bolt"></i> 24/7 Helpline</span>
+            <span>Founder & Dispatch Desk: <strong>Juli Kumari</strong></span>
+            <span><i class="fas fa-phone-alt"></i> <a href="tel:+919142491242">+91 9142491242</a></span>
+        </div>
+        <div class="top-bar-right">
+            <span><i class="fab fa-whatsapp"></i> <a href="https://wa.me/919142491242?text=Hello%20Juli%20Kumari,%20I%20am%20booking%20a%20cab%20online" target="_blank">Chat on WhatsApp</a></span>
+            <span><i class="fas fa-map-marker-alt"></i> Ara & Patna, Bihar</span>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-taxi"></i></div>
+            <div class="logo-text">
+                <h2>Soft <span>Ride</span></h2>
+                <p>Ride Safe • Ride Easy</p>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="fleet.html">Fleet</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="booking.html" class="btn-book">Book a Ride</a>
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <!-- PAGE BANNER -->
+    <section class="page-banner">
+        <h1>Book Your <span>Ride</span></h1>
+        <p>Fill in the details below and we'll get you a ride in minutes</p>
+        <div class="breadcrumb"><a href="index.html">Home</a> / Book a Ride</div>
+    </section>
+
+    <!-- BOOKING FORM SECTION -->
+    <section class="booking-section">
+        <div class="booking-container">
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <span class="step-label">Location</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <span class="step-label">Vehicle</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <span class="step-label">Schedule</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <span class="step-label">Details</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="5">
+                    <div class="step-circle">5</div>
+                    <span class="step-label">Confirm</span>
+                </div>
+            </div>
+
+            <form id="bookingForm">
+                
+                <!-- STEP 1: Location -->
+                <div class="form-step active" id="step1">
+                    <h3><i class="fas fa-map-marked-alt"></i> Enter Your Locations</h3>
+
+                    <!-- Popular Route Chips -->
+                    <div class="route-chips">
+                        <span style="font-size: 12px; color: #64748b; font-weight: 600; width: 100%; display: block; margin-bottom: 4px;">⚡ Popular Quick Routes (Click to Auto-fill):</span>
+                        <button type="button" class="route-chip" onclick="setRoute('Patna Airport (PAT)', 'Gandhi Maidan, Patna', 8)"><i class="fas fa-plane"></i> Patna Airport → Gandhi Maidan (8 km)</button>
+                        <button type="button" class="route-chip" onclick="setRoute('Patna Junction', 'Danapur Station', 12)"><i class="fas fa-train"></i> Patna Jn → Danapur (12 km)</button>
+                        <button type="button" class="route-chip" onclick="setRoute('Patna', 'Ara Junction', 55)"><i class="fas fa-city"></i> Patna → Ara (55 km)</button>
+                        <button type="button" class="route-chip" onclick="setRoute('Patna', 'Gaya / Bodh Gaya', 105)"><i class="fas fa-road"></i> Patna → Gaya (105 km)</button>
+                        <button type="button" class="route-chip" onclick="setRoute('Patna', 'Muzaffarpur', 75)"><i class="fas fa-map-marker-alt"></i> Patna → Muzaffarpur (75 km)</button>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-circle" style="color: #2ecc71; font-size: 10px;"></i> Pickup Location *</label>
+                            <input type="text" id="pickup" placeholder="Enter pickup address" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt" style="color: #e74c3c;"></i> Drop Location *</label>
+                            <input type="text" id="drop" placeholder="Enter drop address" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-road"></i> Distance (km)</label>
+                            <input type="number" id="distance" placeholder="Approx distance" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-comment"></i> Special Instructions</label>
+                            <input type="text" id="instructions" placeholder="Any special requirements">
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn-next" onclick="nextStep(2)">Next: Choose Vehicle <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Vehicle Selection -->
+                <div class="form-step" id="step2">
+                    <h3><i class="fas fa-car"></i> Choose Your Vehicle</h3>
+                    <div class="vehicle-grid">
+                        <div class="vehicle-card" data-vehicle="Sedan" data-price="12">
+                            <img src="https://images.unsplash.com/photo-1610831021583-16b49fdba7b9?auto=format&fit=crop&w=700&q=85" alt="Sedan">
+                            <h4>Sedan</h4>
+                            <p class="vehicle-desc">Economy & Comfort</p>
+                            <p class="vehicle-price">₹12/km</p>
+                            <div class="vehicle-features">
+                                <span><i class="fas fa-user"></i> 4 Seats</span>
+                                <span><i class="fas fa-snowflake"></i> AC</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-card" data-vehicle="SUV" data-price="18">
+                            <img src="https://images.unsplash.com/photo-1529971204705-2f67a87d3552?auto=format&fit=crop&w=700&q=85" alt="SUV">
+                            <h4>SUV</h4>
+                            <p class="vehicle-desc">More Space</p>
+                            <p class="vehicle-price">18/km</p>
+                            <div class="vehicle-features">
+                                <span><i class="fas fa-user"></i> 6 Seats</span>
+                                <span><i class="fas fa-snowflake"></i> AC</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-card" data-vehicle="Van" data-price="25">
+                            <img src="https://images.unsplash.com/photo-1774013842615-807f5eb16d90?auto=format&fit=crop&w=700&q=85" alt="Van">
+                            <h4>Van</h4>
+                            <p class="vehicle-desc">Group Travel</p>
+                            <p class="vehicle-price">₹25/km</p>
+                            <div class="vehicle-features">
+                                <span><i class="fas fa-user"></i> 8 Seats</span>
+                                <span><i class="fas fa-snowflake"></i> AC</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-card" data-vehicle="Luxury" data-price="40">
+                            <img src="https://images.unsplash.com/photo-1771154136472-0834001b7192?auto=format&fit=crop&w=700&q=85" alt="Luxury">
+                            <h4>Luxury</h4>
+                            <p class="vehicle-desc">Premium Ride</p>
+                            <p class="vehicle-price">₹40/km</p>
+                            <div class="vehicle-features">
+                                <span><i class="fas fa-user"></i> 4 Seats</span>
+                                <span><i class="fas fa-gem"></i> Premium</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn-prev" onclick="prevStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn-next" onclick="nextStep(3)">Next: Schedule <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Schedule -->
+                <div class="form-step" id="step3">
+                    <h3><i class="fas fa-calendar-alt"></i> Schedule Your Ride</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Ride Date *</label>
+                            <input type="date" id="rideDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Pickup Time *</label>
+                            <input type="time" id="rideTime" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-users"></i> Number of Passengers *</label>
+                            <select id="passengers" required>
+                                <option value="">Select passengers</option>
+                                <option value="1">1 Passenger</option>
+                                <option value="2">2 Passengers</option>
+                                <option value="3">3 Passengers</option>
+                                <option value="4">4 Passengers</option>
+                                <option value="5">5 Passengers</option>
+                                <option value="6">6 Passengers</option>
+                                <option value="7">7 Passengers</option>
+                                <option value="8">8+ Passengers</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-suitcase"></i> Luggage</label>
+                            <select id="luggage">
+                                <option value="none">No Luggage</option>
+                                <option value="small">Small Bag</option>
+                                <option value="medium">Medium Bag</option>
+                                <option value="large">Large Bag</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn-prev" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn-next" onclick="nextStep(4)">Next: Your Details <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Personal Details -->
+                <div class="form-step" id="step4">
+                    <h3><i class="fas fa-user"></i> Your Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Full Name *</label>
+                            <input type="text" id="fullName" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Phone Number *</label>
+                            <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Email Address *</label>
+                            <input type="email" id="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-credit-card"></i> Payment Method *</label>
+                            <select id="payment" required>
+                                <option value="">Select payment</option>
+                                <option value="cash"> Cash</option>
+                                <option value="card">💳 Credit/Debit Card</option>
+                                <option value="upi"> UPI</option>
+                                <option value="wallet">👛 Wallet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #475569;">
+                        <i class="fas fa-headset" style="color: #f5c518; margin-right: 6px;"></i> Dispatch Helpline: <strong>Juli Kumari</strong> is available at <a href="tel:+919142491242" style="color: #0284c7; font-weight: 600;">+91 9142491242</a> for 24/7 ride tracking.
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn-prev" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn-next" onclick="nextStep(5)">Next: Confirm <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 5: Confirmation -->
+                <div class="form-step" id="step5">
+                    <h3><i class="fas fa-check-circle"></i> Confirm Your Booking</h3>
+                    <div class="booking-summary">
+                        <div class="summary-card">
+                            <h4><i class="fas fa-map-marked-alt"></i> Trip Details</h4>
+                            <div class="summary-row">
+                                <span>Pickup:</span>
+                                <strong id="sumPickup">-</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Drop:</span>
+                                <strong id="sumDrop">-</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Distance:</span>
+                                <strong id="sumDistance">-</strong>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <h4><i class="fas fa-car"></i> Vehicle & Schedule</h4>
+                            <div class="summary-row">
+                                <span>Vehicle:</span>
+                                <strong id="sumVehicle">-</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Date:</span>
+                                <strong id="sumDate">-</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Time:</span>
+                                <strong id="sumTime">-</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Passengers:</span>
+                                <strong id="sumPassengers">-</strong>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <h4><i class="fas fa-user"></i> Contact Info</h4>
+                            <div class="summary-row">
+                                <span>Name:</span>
+                                <strong id="sumName">-</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Phone:</span>
+                                <strong id="sumPhone">-</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Email:</span>
+                                <strong id="sumEmail">-</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Payment:</span>
+                                <strong id="sumPayment">-</strong>
+                            </div>
+                        </div>
+                        <div class="summary-card total-card">
+                            <h4><i class="fas fa-rupee-sign"></i> Total Fare</h4>
+                            <div class="total-price" id="sumTotal">₹0</div>
+                            <p class="fare-note">*Final fare may vary based on actual distance</p>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn-prev" onclick="prevStep(4)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="btn-confirm"><i class="fas fa-check"></i> Confirm Booking</button>
+                    </div>
+                </div>
+
+                <!-- SUCCESS MESSAGE & RECEIPT -->
+                <div class="form-step success-step" id="successStep">
+                    <div class="success-content">
+                        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                        <h2>Booking Confirmed! 🎉</h2>
+                        <p>Your ride has been successfully registered with Soft Ride Dispatch.</p>
+                        <div class="booking-id">Booking ID: <strong id="bookingId">#SR123456</strong></div>
+                        <p class="success-note" id="smsNotice">Our operations desk led by <strong>Juli Kumari</strong> will assign a verified driver shortly.</p>
+
+                        <!-- Printable Receipt Card -->
+                        <div class="receipt-card" id="receiptCard">
+                            <div class="receipt-header">
+                                <div>
+                                    <div class="receipt-title"><i class="fas fa-taxi" style="color:#f5c518;"></i> Soft <span>Ride</span> Official Travel Pass</div>
+                                    <small style="color: #64748b;">Registered Service • Ara & Patna, Bihar • ISO Certified Transit</small>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 20px;">CONFIRMED</span>
+                                </div>
+                            </div>
+                            <div class="receipt-grid">
+                                <div class="receipt-item">
+                                    <label>Booking ID</label>
+                                    <value id="recId">#SR000000</value>
+                                </div>
+                                <div class="receipt-item">
+                                    <label>Date & Time</label>
+                                    <value id="recDateTime">—</value>
+                                </div>
+                                <div class="receipt-item">
+                                    <label>Pickup Location</label>
+                                    <value id="recPickup">—</value>
+                                </div>
+                                <div class="receipt-item">
+                                    <label>Dropoff Location</label>
+                                    <value id="recDrop">—</value>
+                                </div>
+                                <div class="receipt-item">
+                                    <label>Vehicle Category</label>
+                                    <value id="recVehicle">—</value>
+                                </div>
+                                <div class="receipt-item">
+                                    <label>Passenger & Luggage</label>
+                                    <value id="recPaxLug">—</value>
+                                </div>
+                                <div class="receipt-item">
+                                    <label>Passenger Name</label>
+                                    <value id="recName">—</value>
+                                </div>
+                                <div class="receipt-item">
+                                    <label>Customer Phone</label>
+                                    <value id="recPhone">—</value>
+                                </div>
+                            </div>
+                            <div class="receipt-total-row">
+                                <span>Total Estimated Fare (<span id="recKm">0 km</span>):</span>
+                                <strong id="recFare">₹0</strong>
+                            </div>
+                            <div class="receipt-footer">
+                                <div><strong>Dispatch Officer:</strong> Juli Kumari • <strong>Helpline:</strong> +91 9142491242</div>
+                                <small>Thank you for choosing Soft Ride. For emergency support, contact our 24/7 central desk.</small>
+                            </div>
+                        </div>
+
+                        <div class="success-buttons" style="margin-top: 25px;">
+                            <button type="button" class="btn-new" onclick="window.print()" style="background: #0284c7; color: #fff;">
+                                <i class="fas fa-print"></i> Print Receipt
+                            </button>
+                            <button type="button" class="btn-new" id="whatsappShareBtn" onclick="shareReceiptWhatsApp()" style="background: #25d366; color: #fff;">
+                                <i class="fab fa-whatsapp"></i> Confirm on WhatsApp
+                            </button>
+                            <a href="index.html" class="btn-home"><i class="fas fa-home"></i> Home</a>
+                            <button type="button" class="btn-new" onclick="resetBooking()"><i class="fas fa-plus"></i> New Booking</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon"><i class="fas fa-taxi"></i></div>
+                        <div class="logo-text"><h2>Soft <span>Ride</span></h2><p>Ride Safe • Ride Easy</p></div>
+                    </div>
+                    <p>Safe Rides. Better Tomorrow.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="fleet.html">Fleet</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services.html">City Ride</a></li>
+                        <li><a href="services.html">Airport Transfer</a></li>
+                        <li><a href="services.html">Corporate Ride</a></li>
+                        <li><a href="services.html">Outstation</a></li>
+                        <li><a href="services.html">Luxury Ride</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-user-tie"></i><strong>Juli Kumari</strong> (Founder & MD)</li>
+                        <li><i class="fas fa-phone"></i><a href="tel:+919142491242">+91 9142491242</a></li>
+                        <li><i class="fab fa-whatsapp"></i><a href="https://wa.me/919142491242?text=Hello%20Juli%20Kumari,%20I%20want%20to%20book%20a%20Soft%20Ride%20cab" target="_blank">+91 9142491242 (WhatsApp)</a></li>
+                        <li><i class="fas fa-envelope"></i><a href="mailto:julikumari.softride@gmail.com">julikumari.softride@gmail.com</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i>Head Office: Ara & Patna, Bihar, India</li>
+                    </ul>
+                    <div class="social-links">
+                        <span aria-label="Facebook"><i class="fab fa-facebook-f"></i></span>
+                        <span aria-label="Instagram"><i class="fab fa-instagram"></i></span>
+                        <span aria-label="YouTube"><i class="fab fa-youtube"></i></span>
+                        <span aria-label="Twitter"><i class="fab fa-twitter"></i></span>
+                        <span aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Soft Ride. Founded & Directed by Juli Kumari. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="contact.html">Contact Support</a>
+                    <a href="booking.html">Book a Ride</a>
+                    <a href="admin/index.html">Admin Portal</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
+        <a href="https://wa.me/919142491242?text=Hello%20Juli%20Kumari,%20I%20want%20to%20book%20a%20cab%20with%20Soft%20Ride" class="floating-btn whatsapp" title="Chat with Juli Kumari on WhatsApp" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+919142491242" class="floating-btn call" title="Call Juli Kumari directly">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
+
+    <script src="style.js"></script>
+    <script src="booking.js"></script>
+</body>
+</html>

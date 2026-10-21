@@ -1,0 +1,2 @@
+<?php
+require __DIR__ . '/bootstrap.php';method('POST');admin_required();$x=input();$id=trim((string)($x['id']??''));$status=(string)($x['status']??'');if(!$id||!in_array($status,['Pending','Confirmed','Completed','Cancelled'],true))respond(422,['error'=>'Invalid booking status.']);$q=db()->prepare('UPDATE soft_ride_bookings SET status=? WHERE booking_code=?');$q->execute([$status,$id]);respond(200,['ok'=>true]);

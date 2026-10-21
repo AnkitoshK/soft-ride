@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/bookings.php", "destination": "/api/bookings.js" },
+    { "source": "/api/messages.php", "destination": "/api/messages.js" },
+    { "source": "/api/admin_login.php", "destination": "/api/admin_login.js" },
+    { "source": "/api/admin_logout.php", "destination": "/api/admin_logout.js" },
+    { "source": "/api/admin_data.php", "destination": "/api/admin_data.js" },
+    { "source": "/api/admin_booking_status.php", "destination": "/api/admin_booking_status.js" },
+    { "source": "/api/admin_message_delete.php", "destination": "/api/admin_message_delete.js" },
+    { "source": "/api/bookings", "destination": "/api/bookings.js" },
+    { "source": "/api/messages", "destination": "/api/messages.js" },
+    { "source": "/api/admin_login", "destination": "/api/admin_login.js" },
+    { "source": "/api/admin_logout", "destination": "/api/admin_logout.js" },
+    { "source": "/api/admin_data", "destination": "/api/admin_data.js" },
+    { "source": "/api/admin_booking_status", "destination": "/api/admin_booking_status.js" },
+    { "source": "/api/admin_message_delete", "destination": "/api/admin_message_delete.js" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+      ]
+    }
+  ]
+}

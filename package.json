@@ -1,0 +1,25 @@
+{
+  "name": "soft-ride",
+  "version": "1.0.0",
+  "description": "Soft Ride - Modern Cab Booking & Fleet Dispatch Platform. Founded by Juli Kumari (+91 9142491242).",
+  "main": "api/bookings.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "taxi",
+    "cab-booking",
+    "fleet-management",
+    "soft-ride",
+    "bihar",
+    "patna",
+    "ara",
+    "vercel"
+  ],
+  "author": "Juli Kumari <julikumari.softride@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}
