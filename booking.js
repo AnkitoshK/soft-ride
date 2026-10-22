@@ -270,6 +270,31 @@ if (bookingForm) {
                 fare: totalFare
             };
 
+            // Save to client storage so it syncs with admin panel
+            try {
+                const clientBookings = JSON.parse(localStorage.getItem('softride_client_bookings') || '[]');
+                clientBookings.unshift({
+                    id: (result.id || bookingCode).replace(/^#/, ''),
+                    booking_code: (result.id || bookingCode).replace(/^#/, ''),
+                    customer_name: name,
+                    phone: phone,
+                    email: email,
+                    pickup: pickup,
+                    dropoff: drop,
+                    distance: parseFloat(distanceVal) || 0,
+                    vehicle: selectedVehicle,
+                    fare: parseFloat(totalFare) || 0,
+                    ride_date: rideDate,
+                    ride_time: rideTime,
+                    passengers: parseInt(passengers, 10) || 1,
+                    luggage: luggage,
+                    payment: payment,
+                    status: 'Pending',
+                    created_at: new Date().toISOString()
+                });
+                localStorage.setItem('softride_client_bookings', JSON.stringify(clientBookings.slice(0, 50)));
+            } catch (e) {}
+
             const smsNotice = document.getElementById('smsNotice');
             if (smsNotice) {
                 smsNotice.innerHTML = `Your booking reference is <strong>${bookingCode}</strong>. Dispatch head <strong>Juli Kumari</strong> (+91 9142491242) has received your request and driver details will be shared via call & WhatsApp.`;

@@ -39,7 +39,15 @@ const STATIC_ASSETS = [
   path.join(__dirname, 'assets', 'professional-driver.jpg'),
   path.join(__dirname, 'assets', 'luxury-car.jpg'),
   path.join(__dirname, 'api', '_auth.js'),
-  path.join(__dirname, 'api', 'admin_booking_delete.js')
+  path.join(__dirname, 'api', '_db.js'),
+  path.join(__dirname, 'api', 'admin_booking_delete.js'),
+  path.join(__dirname, 'api', 'admin_booking_status.js'),
+  path.join(__dirname, 'api', 'admin_data.js'),
+  path.join(__dirname, 'api', 'admin_login.js'),
+  path.join(__dirname, 'api', 'admin_logout.js'),
+  path.join(__dirname, 'api', 'admin_message_delete.js'),
+  path.join(__dirname, 'api', 'bookings.js'),
+  path.join(__dirname, 'api', 'messages.js')
 ];
 
 async function handler(req, res) {

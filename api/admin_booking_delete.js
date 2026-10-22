@@ -4,7 +4,7 @@ const { isAuthenticated } = require('./_auth');
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Admin-Token');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Admin-Token,X-Deleted-Bookings');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
@@ -22,7 +22,12 @@ module.exports = async (req, res) => {
     }
 
     await db.deleteBooking(id);
-    return res.status(200).json({ ok: true, id, message: 'Booking deleted successfully' });
+    return res.status(200).json({
+      ok: true,
+      id,
+      message: 'Booking deleted successfully',
+      deletedBookings: db.getDeletedBookingIds()
+    });
   } catch (err) {
     console.error('Delete booking error:', err);
     return res.status(500).json({ error: 'Failed to delete booking' });

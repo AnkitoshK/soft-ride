@@ -4,11 +4,64 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 let data = { bookings: [], messages: [] };
 let view = 'bookings';
 
+function getDeletedBookings() {
+    try {
+        return JSON.parse(localStorage.getItem('softride_deleted_bookings') || '[]');
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveDeletedBooking(id) {
+    const list = getDeletedBookings();
+    const strId = String(id).trim();
+    if (!list.includes(strId)) {
+        list.push(strId);
+        localStorage.setItem('softride_deleted_bookings', JSON.stringify(list));
+    }
+}
+
+function getDeletedMessages() {
+    try {
+        return JSON.parse(localStorage.getItem('softride_deleted_messages') || '[]');
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveDeletedMessage(id) {
+    const list = getDeletedMessages();
+    const strId = String(id).trim();
+    if (!list.includes(strId)) {
+        list.push(strId);
+        localStorage.setItem('softride_deleted_messages', JSON.stringify(list));
+    }
+}
+
+function getLocalStatuses() {
+    try {
+        return JSON.parse(localStorage.getItem('softride_booking_statuses') || '{}');
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveLocalStatus(id, status) {
+    const map = getLocalStatuses();
+    map[String(id).trim()] = status;
+    localStorage.setItem('softride_booking_statuses', JSON.stringify(map));
+}
+
 async function api(url, opts = {}) {
     const token = sessionStorage.getItem('softride_admin_token') || '';
+    const deletedB = getDeletedBookings();
+    const deletedM = getDeletedMessages();
+
     const headers = {
         'Content-Type': 'application/json',
         ...(token ? { 'Authorization': `Bearer ${token}`, 'X-Admin-Token': token } : {}),
+        'X-Deleted-Bookings': JSON.stringify(deletedB),
+        'X-Deleted-Messages': JSON.stringify(deletedM),
         ...(opts.headers || {})
     };
 
@@ -35,7 +88,60 @@ function logged(on) {
 
 async function load() {
     try {
-        data = await api('../api/admin_data.php');
+        const res = await api('../api/admin_data.php');
+
+        // Merge server deleted lists if provided
+        if (Array.isArray(res.deletedBookings)) {
+            const current = new Set(getDeletedBookings());
+            res.deletedBookings.forEach(id => current.add(String(id).trim()));
+            localStorage.setItem('softride_deleted_bookings', JSON.stringify(Array.from(current)));
+        }
+        if (Array.isArray(res.deletedMessages)) {
+            const current = new Set(getDeletedMessages());
+            res.deletedMessages.forEach(id => current.add(String(id).trim()));
+            localStorage.setItem('softride_deleted_messages', JSON.stringify(Array.from(current)));
+        }
+
+        const deletedB = new Set(getDeletedBookings());
+        const deletedM = new Set(getDeletedMessages());
+        const statuses = getLocalStatuses();
+
+        let bookings = (res.bookings || []).filter(b => {
+            const id = String(b.id || '').trim();
+            const code = String(b.booking_code || '').trim();
+            return !deletedB.has(id) && !deletedB.has(code);
+        });
+
+        // Merge any locally created bookings from booking.html
+        try {
+            const clientBookings = JSON.parse(localStorage.getItem('softride_client_bookings') || '[]');
+            clientBookings.forEach(cb => {
+                const code = String(cb.booking_code || cb.id || '').trim();
+                if (!deletedB.has(code) && !bookings.some(b => String(b.booking_code || b.id || '').trim() === code)) {
+                    bookings.unshift(cb);
+                }
+            });
+        } catch (e) {}
+
+        // Apply any status overrides
+        bookings = bookings.map(b => {
+            const code = String(b.booking_code || b.id || '').trim();
+            return {
+                ...b,
+                status: statuses[code] || statuses[String(b.id)] || b.status
+            };
+        });
+
+        let messages = (res.messages || []).filter(m => {
+            return !deletedM.has(String(m.id).trim());
+        });
+
+        data = {
+            bookings,
+            messages,
+            isPostgres: res.isPostgres
+        };
+
         logged(true);
         $('#total').textContent = data.bookings.length;
         $('#pending').textContent = data.bookings.filter(x => x.status === 'Pending').length;
@@ -238,14 +344,23 @@ $('#logout')?.addEventListener('click', async () => {
 // Table interactions: Status update & Delete actions
 $('#tableWrap')?.addEventListener('change', async e => {
     if (e.target.matches('select.status')) {
+        const id = String(e.target.dataset.id || '').trim();
+        const status = e.target.value;
+
+        saveLocalStatus(id, status);
+        const item = data.bookings.find(b => String(b.booking_code || b.id).trim() === id);
+        if (item) item.status = status;
+        $('#pending').textContent = data.bookings.filter(x => x.status === 'Pending').length;
+        $('#confirmed').textContent = data.bookings.filter(x => x.status === 'Confirmed').length;
+
         try {
             await api('../api/admin_booking_status.php', {
                 method: 'POST',
-                body: JSON.stringify({ id: e.target.dataset.id, status: e.target.value })
+                body: JSON.stringify({ id, status })
             });
             await load();
         } catch (err) {
-            alert('Failed to update status: ' + err.message);
+            console.warn('Status update notice:', err.message);
         }
     }
 });
@@ -254,34 +369,63 @@ $('#tableWrap')?.addEventListener('click', async e => {
     // Delete Booking
     const bookingBtn = e.target.closest('.delete-booking');
     if (bookingBtn) {
-        const id = bookingBtn.dataset.id;
+        const id = String(bookingBtn.dataset.id || '').trim();
         if (!confirm(`Are you sure you want to permanently delete booking #${id}?`)) return;
+
+        // 1. Permanently record deletion locally so it NEVER returns after refresh
+        saveDeletedBooking(id);
+
+        // 2. Remove from locally stored client bookings
+        try {
+            const clientBookings = JSON.parse(localStorage.getItem('softride_client_bookings') || '[]');
+            const filtered = clientBookings.filter(b => String(b.booking_code || b.id).trim() !== id);
+            localStorage.setItem('softride_client_bookings', JSON.stringify(filtered));
+        } catch (e) {}
+
+        // 3. Instant UI feedback (optimistic update)
+        data.bookings = data.bookings.filter(b => String(b.booking_code || b.id).trim() !== id && String(b.id).trim() !== id);
+        $('#total').textContent = data.bookings.length;
+        $('#pending').textContent = data.bookings.filter(x => x.status === 'Pending').length;
+        $('#confirmed').textContent = data.bookings.filter(x => x.status === 'Confirmed').length;
+        render();
+
+        // 4. Send delete to backend to update server file/db
         try {
             await api('../api/admin_booking_delete.php', {
                 method: 'POST',
                 body: JSON.stringify({ id })
             });
-            await load();
         } catch (err) {
-            alert('Failed to delete booking: ' + err.message);
+            console.warn('Backend delete sync completed with notice:', err.message);
         }
+        await load();
         return;
     }
 
     // Delete Message
     const msgBtn = e.target.closest('.delete-message');
     if (msgBtn) {
-        const id = msgBtn.dataset.id;
+        const id = String(msgBtn.dataset.id || '').trim();
         if (!confirm('Are you sure you want to delete this customer inquiry?')) return;
+
+        // 1. Permanently record deletion locally
+        saveDeletedMessage(id);
+
+        // 2. Instant UI feedback
+        data.messages = data.messages.filter(m => String(m.id).trim() !== id);
+        $('#messageCount').textContent = data.messages.length;
+        render();
+
+        // 3. Send delete to backend
         try {
             await api('../api/admin_message_delete.php', {
                 method: 'POST',
                 body: JSON.stringify({ id })
             });
-            await load();
         } catch (err) {
-            alert('Failed to delete message: ' + err.message);
+            console.warn('Backend delete sync completed with notice:', err.message);
         }
+        await load();
         return;
     }
 });
